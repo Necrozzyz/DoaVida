@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Endereco;
 use Illuminate\Http\Request;
 
 class EnderecoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Listar endereços
     public function index()
     {
-        //
+        $enderecos = Endereco::all();
+        return response()->json($enderecos);
     }
 
     /**
@@ -22,12 +22,18 @@ class EnderecoController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Criar um novo endereço
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'logradouro' => 'required|string|max:255',
+            'bairro' => 'required|string|max:255',
+            'cidade' => 'required|string|max:255',
+            'cep' => 'required|string|max:10',
+        ]);
+
+        $endereco = Endereco::create($validated);
+        return response()->json($endereco, 201);
     }
 
     /**
@@ -46,19 +52,19 @@ class EnderecoController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    // Atualizar um endereço
+    public function update(Request $request, $id)
     {
-        //
+        $endereco = Endereco::findOrFail($id);
+        $endereco->update($request->all());
+        return response()->json($endereco);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    // Deletar um endereço
+    public function destroy($id)
     {
-        //
+        $endereco = Endereco::findOrFail($id);
+        $endereco->delete();
+        return response()->json(['message' => 'Endereço excluído com sucesso']);
     }
 }
