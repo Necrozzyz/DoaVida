@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Hospital;
 use Illuminate\Http\Request;
 
 class HospitalController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Listar todos os hospitais
     public function index()
     {
-        //
+        $hospitais = Hospital::all();
+        return response()->json($hospitais);
     }
 
     /**
@@ -22,12 +22,16 @@ class HospitalController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Cadastrar um novo hospital
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'nome' => 'required|string|max:255',
+            'endereco' => 'required|string|max:255',
+        ]);
+
+        $hospital = Hospital::create($validated);
+        return response()->json($hospital, 201);
     }
 
     /**
