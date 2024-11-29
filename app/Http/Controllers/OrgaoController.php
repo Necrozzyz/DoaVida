@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Orgao;
 use Illuminate\Http\Request;
 
 class OrgaoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Listar todos os órgãos
     public function index()
     {
-        //
+        $orgaos = Orgao::all();
+        return response()->json($orgaos);
     }
 
     /**
@@ -22,12 +22,17 @@ class OrgaoController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Criar um novo órgão
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'nome' => 'required|string|max:255',
+            'tipo' => 'required|string|max:255',
+            'status' => 'required|in:disponivel,indisponivel',
+        ]);
+        
+        $orgao = Orgao::create($validated);
+        return response()->json($orgao, 201);
     }
 
     /**
