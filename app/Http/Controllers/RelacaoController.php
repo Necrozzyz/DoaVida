@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Relacao;
+use App\Models\Orgao;
 use Illuminate\Http\Request;
 
 class RelacaoController extends Controller
@@ -22,20 +24,24 @@ class RelacaoController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Criar uma nova relação (doador ou receptor)
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'usuario_id' => 'required|exists:users,id',
+            'orgao_id' => 'required|exists:orgaos,id',
+            'tipo' => 'required|in:Doador,Receptor',
+        ]);
+
+        $relacao = Relacao::create($validated);
+        return response()->json($relacao, 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    // Listar as relações de um usuário
+    public function show($usuarioId)
     {
-        //
+        $relacoes = Relacao::where('usuario_id', $usuarioId)->with('orgao')->get();
+        return response()->json($relacoes);
     }
 
     /**
