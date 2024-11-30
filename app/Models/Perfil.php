@@ -8,9 +8,9 @@ class Perfil extends Model
 {
     protected $fillable = ['descricao'];
 
-    public function usuarios()
+    public function users()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(User::class, 'perfil_id');
     }
 }
 
