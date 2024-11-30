@@ -46,4 +46,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function perfil()
+    {
+    return $this->belongsTo(Perfil::class);
+    }
+
+    public function endereco()
+    {
+    return $this->belongsTo(Endereco::class);
+    }
 }
