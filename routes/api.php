@@ -10,15 +10,15 @@ use App\Http\Controllers\OrgaoController;
 use App\Http\Controllers\RelacaoController;
 
 Route::prefix('auth')->group(function () {
-    Route::post('/auth/login', [AthController::class, 'login']); // Rota para login
-    Route::post('/auth/register', [AthController::class, 'register']); // Rota para registrar um novo usuário
+    Route::post('/login', [AthController::class, 'login']); // Rota para login
+    Route::post('/register', [AthController::class, 'register']); // Rota para registrar um novo usuário
     Route::post('logout', [AthController::class, 'logout']); // Rota para logout
 });
 
 Route::prefix('users')->group(function () {
-    Route::get('/user', [UserController::class, 'index']); // Listar todos os usuários
+    Route::get('/list', [UserController::class, 'index']); // Listar todos os usuários
     Route::post('/', [UserController::class, 'store']); // Criar novo usuário
-    Route::get('/user/{id}', [UserController::class, 'show']); // Obter detalhes de um usuário
+    Route::get('/{id}', [UserController::class, 'show']); // Obter detalhes de um usuário
 });
 
 Route::prefix('perfils')->group(function () {
