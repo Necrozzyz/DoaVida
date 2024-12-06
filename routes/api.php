@@ -8,6 +8,7 @@ use App\Http\Controllers\EnderecoController;
 use App\Http\Controllers\HospitalController;
 use App\Http\Controllers\OrgaoController;
 use App\Http\Controllers\RelacaoController;
+use Enums\UserRole;
 
 Route::prefix('auth')->group(function () {
     Route::post('/login', [AthController::class, 'login']); // Rota para login

@@ -14,6 +14,24 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasApiTokens, HasFactory, Notifiable;
 
+     // Verifica se o usuário tem um papel específico
+     public function hasRole(string $role): bool
+     {
+         return $this->role === $role;
+     }
+ 
+     // Verifica se o usuário é administrador
+     public function isAdmin(): bool
+     {
+         return $this->role === UserRole::ADMIN->value;
+     }
+ 
+     // Verifica se o usuário é coordenador
+     public function isCoordinator(): bool
+     {
+         return $this->role === UserRole::COORDINATOR->value;
+     }
+
     /**
      * The attributes that are mass assignable.
      *
